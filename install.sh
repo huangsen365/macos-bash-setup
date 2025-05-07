@@ -32,6 +32,18 @@ fi
 success "Using Homebrew at: $BREW_CMD"
 eval "$($BREW_CMD shellenv)"
 
+# Get Homebrew bash path first (needed for checks)
+HOMEBREW_BASH_PATH=$($BREW_CMD --prefix)/bin/bash
+
+# Check if any sudo operations will be needed and cache credentials upfront
+current_shell=$(dscl . -read /Users/$USER UserShell | awk '{print $2}')
+if [[ "$current_shell" != "$HOMEBREW_BASH_PATH" ]] || ! grep -q "$HOMEBREW_BASH_PATH" /etc/shells; then
+  info "Administrator privileges will be required for shell setup"
+  sudo -v
+  # Keep sudo credentials fresh for the duration of the script
+  (while true; do sudo -n true; sleep 50; kill -0 "$$" || exit; done 2>/dev/null &)
+fi
+
 # Install Bash if needed
 if ! $BREW_CMD list bash &>/dev/null; then
   info "Installing Bash via Homebrew..."
@@ -40,9 +52,6 @@ if ! $BREW_CMD list bash &>/dev/null; then
 else
   success "Homebrew Bash is already installed"
 fi
-
-# Get Homebrew bash path
-HOMEBREW_BASH_PATH=$($BREW_CMD --prefix)/bin/bash
 
 # Add to /etc/shells if needed
 if ! grep -q "$HOMEBREW_BASH_PATH" /etc/shells; then
@@ -54,10 +63,9 @@ else
 fi
 
 # Set as default shell if needed
-current_shell=$(dscl . -read /Users/$USER UserShell | awk '{print $2}')
 if [[ "$current_shell" != "$HOMEBREW_BASH_PATH" ]]; then
   info "Setting Homebrew's Bash as default shell..."
-  chsh -s "$HOMEBREW_BASH_PATH"
+  sudo chsh -s "$HOMEBREW_BASH_PATH" $USER
   success "Default shell changed"
 else
   success "Homebrew's Bash already set as default shell"
