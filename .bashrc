@@ -42,3 +42,5 @@ if [ -f /opt/homebrew/etc/bash_completion ]; then
   source /opt/homebrew/etc/bash_completion
 fi
 
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+export PATH="$PATH:/Applications/Tailscale.app/Contents/MacOS"
