@@ -46,6 +46,9 @@ alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 export PATH="$PATH:/Applications/Tailscale.app/Contents/MacOS"
 export PATH="/opt/homebrew/bin:$PATH"
 
+export LANG=zh_CN.UTF-8
+export LC_ALL=zh_CN.UTF-8
+
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/mysql-client/lib/pkgconfig"
 export MYSQLCLIENT_CFLAGS=$(pkg-config --cflags mysqlclient)
