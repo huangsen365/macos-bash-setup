@@ -47,6 +47,6 @@ export PATH="$PATH:/Applications/Tailscale.app/Contents/MacOS"
 export PATH="/opt/homebrew/bin:$PATH"
 
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
-
+export PKG_CONFIG_PATH="/opt/homebrew/opt/mysql-client/lib/pkgconfig"
 export MYSQLCLIENT_CFLAGS=$(pkg-config --cflags mysqlclient)
 export MYSQLCLIENT_LDFLAGS=$(pkg-config --libs mysqlclient)
