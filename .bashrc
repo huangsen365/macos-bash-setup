@@ -44,3 +44,4 @@ fi
 
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 export PATH="$PATH:/Applications/Tailscale.app/Contents/MacOS"
+export PATH="/opt/homebrew/bin:$PATH"
