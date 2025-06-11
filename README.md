@@ -31,6 +31,16 @@
 - macOS
 - [Homebrew](https://brew.sh/)
 
+## Optional dependencies
+
+If you use the MySQL settings included in `.bashrc`, you may also want to
+install the following packages:
+
+```bash
+brew install pkg-config
+brew install mysql
+```
+
 ## License
 
 MIT
