@@ -32,6 +32,16 @@ alias ...="cd ../.."
 # PATH 扩展（示例：添加 ~/bin 目录）
 # -------------------------------
 
+# Add common Homebrew locations so `brew` works even if they are not already
+# in PATH. This covers Apple Silicon Macs (`/opt/homebrew`) and Intel Macs
+# (`/usr/local`).
+if [ -d "/opt/homebrew/bin" ]; then
+  export PATH="/opt/homebrew/bin:$PATH"
+fi
+if [ -d "/usr/local/bin" ]; then
+  export PATH="/usr/local/bin:$PATH"
+fi
+
 export PATH="$HOME/bin:$PATH"
 
 # -------------------------------
