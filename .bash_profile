@@ -1,7 +1,10 @@
 # -------------------------------
 # Homebrew 配置
 # -------------------------------
-eval "$(/opt/homebrew/bin/brew shellenv)"
+BREW_CMD="$(command -v brew)"
+if [ -n "$BREW_CMD" ]; then
+  eval "$($BREW_CMD shellenv)"
+fi
 
 # 如果存在 .bashrc，则加载它
 if [ -f ~/.bashrc ]; then
