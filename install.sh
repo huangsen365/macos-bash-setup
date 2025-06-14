@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Color definitions
 RESET="\033[0m"
@@ -36,7 +36,7 @@ eval "$($BREW_CMD shellenv)"
 HOMEBREW_BASH_PATH=$($BREW_CMD --prefix)/bin/bash
 
 # Check if any sudo operations will be needed and cache credentials upfront
-current_shell=$(dscl . -read /Users/$USER UserShell | awk '{print $2}')
+current_shell=$(dscl . -read /Users/"$USER" UserShell | awk '{print $2}')
 if [[ "$current_shell" != "$HOMEBREW_BASH_PATH" ]] || ! grep -q "$HOMEBREW_BASH_PATH" /etc/shells; then
   info "Administrator privileges will be required for shell setup"
   sudo -v
@@ -65,7 +65,7 @@ fi
 # Set as default shell if needed
 if [[ "$current_shell" != "$HOMEBREW_BASH_PATH" ]]; then
   info "Setting Homebrew's Bash as default shell..."
-  sudo chsh -s "$HOMEBREW_BASH_PATH" $USER
+  sudo chsh -s "$HOMEBREW_BASH_PATH" "$USER"
   success "Default shell changed"
 else
   success "Homebrew's Bash already set as default shell"

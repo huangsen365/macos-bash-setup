@@ -21,10 +21,18 @@
    sh install.sh
    ```
 
-3. Restart your terminal or run:
-   ```
-   exec /opt/homebrew/bin/bash -l
-   ```
+3. Restart your terminal or run the following to launch the Homebrew Bash.
+   This works on both Apple Silicon and Intel Macs:
+   ```bash
+exec "$(brew --prefix)"/bin/bash -l
+```
+
+## Cross-platform notes
+
+Homebrew installs packages under different prefixes depending on your Mac's
+architecture (`/opt/homebrew` for Apple Silicon and `/usr/local` for Intel).
+All scripts in this repo use `#!/usr/bin/env bash` and rely on `brew --prefix`
+so the same commands work on both types of machines.
 
 ## Requirements
 

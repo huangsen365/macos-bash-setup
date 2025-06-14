@@ -38,18 +38,21 @@ export PATH="$HOME/bin:$PATH"
 # bash-completion（如果安装了的话）
 # -------------------------------
 
-if [ -f /opt/homebrew/etc/bash_completion ]; then
-  source /opt/homebrew/etc/bash_completion
+if command -v brew >/dev/null; then
+  HOMEBREW_PREFIX="$(brew --prefix)"
+  if [ -f "$HOMEBREW_PREFIX/etc/bash_completion" ]; then
+    source "$HOMEBREW_PREFIX/etc/bash_completion"
+  fi
+  export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+  export PATH="$HOMEBREW_PREFIX/opt/mysql-client/bin:$PATH"
+  export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/mysql-client/lib/pkgconfig"
 fi
 
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 export PATH="$PATH:/Applications/Tailscale.app/Contents/MacOS"
-export PATH="/opt/homebrew/bin:$PATH"
 
 export LANG=zh_CN.UTF-8
 export LC_ALL=zh_CN.UTF-8
 
-export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
-export PKG_CONFIG_PATH="/opt/homebrew/opt/mysql-client/lib/pkgconfig"
 export MYSQLCLIENT_CFLAGS=$(pkg-config --cflags mysqlclient)
 export MYSQLCLIENT_LDFLAGS=$(pkg-config --libs mysqlclient)
