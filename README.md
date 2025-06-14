@@ -34,6 +34,10 @@ architecture (`/opt/homebrew` for Apple Silicon and `/usr/local` for Intel).
 All scripts in this repo use `#!/usr/bin/env bash` and rely on `brew --prefix`
 so the same commands work on both types of machines.
 
+Your `.bashrc` also automatically adds `/opt/homebrew/bin` and `/usr/local/bin`
+to `PATH` if they exist. This guarantees that `brew` and packages installed by
+Homebrew are found regardless of architecture.
+
 ## Requirements
 
 - macOS
