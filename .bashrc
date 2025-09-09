@@ -21,9 +21,9 @@ export HISTCONTROL=
 # 常用 alias（可按需修改或扩展）
 # -------------------------------
 
-alias ll="ls -lah"
-alias la="ls -A"
-alias l="ls -CF"
+alias ll="ls -lahG"
+alias la="ls -AG"
+alias l="ls -CFG"
 alias gs="git status"
 alias ..="cd .."
 alias ...="cd ../.."
