@@ -30,7 +30,8 @@ if [ -z "$BREW_CMD" ]; then
 fi
 
 success "Using Homebrew at: $BREW_CMD"
-eval "$($BREW_CMD shellenv)"
+# Pass an explicit shell name to avoid shellenv using /bin/ps (blocked on some systems)
+eval "$($BREW_CMD shellenv bash)"
 
 # Get Homebrew bash path first (needed for checks)
 HOMEBREW_BASH_PATH=$($BREW_CMD --prefix)/bin/bash
@@ -60,6 +61,24 @@ if ! $BREW_CMD list pkg-config &>/dev/null; then
   success "pkg-config installed successfully!"
 else
   success "pkg-config is already installed"
+fi
+
+# Offer to install mysql-client (optional)
+if ! $BREW_CMD list --versions mysql-client &>/dev/null; then
+  warn "mysql-client is not installed (needed for optional MySQL helpers)"
+  read -r -p "Install mysql-client via Homebrew? [y/N]: " response
+  if [[ "$response" =~ ^[Yy]$ ]]; then
+    info "Installing mysql-client via Homebrew..."
+    if $BREW_CMD install mysql-client; then
+      success "mysql-client installed successfully!"
+    else
+      warn "mysql-client installation failed; continuing without it."
+    fi
+  else
+    warn "Skipping mysql-client installation."
+  fi
+else
+  success "mysql-client is already installed"
 fi
 
 # Add to /etc/shells if needed

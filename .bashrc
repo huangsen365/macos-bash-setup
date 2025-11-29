@@ -57,8 +57,18 @@ if command -v brew >/dev/null; then
     source "$HOMEBREW_PREFIX/etc/bash_completion"
   fi
   export PATH="$HOMEBREW_PREFIX/bin:$PATH"
-  export PATH="$HOMEBREW_PREFIX/opt/mysql-client/bin:$PATH"
-  export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/mysql-client/lib/pkgconfig"
+  MYSQL_CLIENT_PREFIX="$HOMEBREW_PREFIX/opt/mysql-client"
+  MYSQL_CLIENT_PKGCONFIG="$MYSQL_CLIENT_PREFIX/lib/pkgconfig"
+  if [ -d "$MYSQL_CLIENT_PREFIX" ]; then
+    export PATH="$MYSQL_CLIENT_PREFIX/bin:$PATH"
+    if [ -d "$MYSQL_CLIENT_PKGCONFIG" ]; then
+      export PKG_CONFIG_PATH="$MYSQL_CLIENT_PKGCONFIG${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+      if command -v pkg-config >/dev/null && [ -f "$MYSQL_CLIENT_PKGCONFIG/mysqlclient.pc" ]; then
+        export MYSQLCLIENT_CFLAGS="$(pkg-config --cflags mysqlclient)"
+        export MYSQLCLIENT_LDFLAGS="$(pkg-config --libs mysqlclient)"
+      fi
+    fi
+  fi
 fi
 
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
@@ -66,6 +76,3 @@ export PATH="$PATH:/Applications/Tailscale.app/Contents/MacOS"
 
 export LANG=zh_CN.UTF-8
 export LC_ALL=zh_CN.UTF-8
-
-export MYSQLCLIENT_CFLAGS=$(pkg-config --cflags mysqlclient)
-export MYSQLCLIENT_LDFLAGS=$(pkg-config --libs mysqlclient)
