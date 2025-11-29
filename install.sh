@@ -53,6 +53,15 @@ else
   success "Homebrew Bash is already installed"
 fi
 
+# Install pkg-config if needed
+if ! $BREW_CMD list pkg-config &>/dev/null; then
+  info "Installing pkg-config via Homebrew..."
+  $BREW_CMD install pkg-config
+  success "pkg-config installed successfully!"
+else
+  success "pkg-config is already installed"
+fi
+
 # Add to /etc/shells if needed
 if ! grep -q "$HOMEBREW_BASH_PATH" /etc/shells; then
   info "Adding Homebrew's Bash to /etc/shells..."
