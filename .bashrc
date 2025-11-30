@@ -57,16 +57,20 @@ if command -v brew >/dev/null; then
     source "$HOMEBREW_PREFIX/etc/bash_completion"
   fi
   export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+  # mysql-client configuration (keg-only, not symlinked into Homebrew prefix)
   MYSQL_CLIENT_PREFIX="$HOMEBREW_PREFIX/opt/mysql-client"
-  MYSQL_CLIENT_PKGCONFIG="$MYSQL_CLIENT_PREFIX/lib/pkgconfig"
   if [ -d "$MYSQL_CLIENT_PREFIX" ]; then
+    # Add mysql-client binaries to PATH
     export PATH="$MYSQL_CLIENT_PREFIX/bin:$PATH"
+
+    # Set compiler flags for mysql-client (needed by build systems)
+    export LDFLAGS="-L$MYSQL_CLIENT_PREFIX/lib${LDFLAGS:+ $LDFLAGS}"
+    export CPPFLAGS="-I$MYSQL_CLIENT_PREFIX/include${CPPFLAGS:+ $CPPFLAGS}"
+
+    # Set PKG_CONFIG_PATH for pkgconf/pkg-config
+    MYSQL_CLIENT_PKGCONFIG="$MYSQL_CLIENT_PREFIX/lib/pkgconfig"
     if [ -d "$MYSQL_CLIENT_PKGCONFIG" ]; then
       export PKG_CONFIG_PATH="$MYSQL_CLIENT_PKGCONFIG${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
-      if command -v pkg-config >/dev/null && [ -f "$MYSQL_CLIENT_PKGCONFIG/mysqlclient.pc" ]; then
-        export MYSQLCLIENT_CFLAGS="$(pkg-config --cflags mysqlclient)"
-        export MYSQLCLIENT_LDFLAGS="$(pkg-config --libs mysqlclient)"
-      fi
     fi
   fi
 fi
