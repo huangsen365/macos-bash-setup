@@ -5,6 +5,8 @@
 ## What it does
 
 - Installs the latest Bash using Homebrew
+- Installs `pkg-config` (required for some build tools)
+- Optionally installs `mysql-client` (prompts during setup)
 - Sets Homebrew Bash as your default shell
 - Creates symlinks for `.bashrc` and `.bash_profile`
 
@@ -17,9 +19,11 @@
    ```
 
 2. Run the setup script:
+   ```bash
+   bash install.sh
    ```
-   sh install.sh
-   ```
+
+   > **Note:** Use `bash` (not `sh`) to run the script for proper colored output.
 
 3. Restart your terminal or run the following to launch the Homebrew Bash.
    This works on both Apple Silicon and Intel Macs:
@@ -45,13 +49,17 @@ Homebrew are found regardless of architecture.
 
 ## Optional dependencies
 
-If you use the MySQL settings included in `.bashrc`, you may also want to
-install the following packages:
+The install script automatically installs `pkg-config` and offers to install
+`mysql-client` during setup. If you need to install them manually:
 
 ```bash
 brew install pkg-config
-brew install mysql
+brew install mysql-client
 ```
+
+The `.bashrc` includes helper configurations for MySQL client (PATH, LDFLAGS,
+CPPFLAGS, PKG_CONFIG_PATH) that are automatically set when `mysql-client` is
+installed via Homebrew.
 
 ## License
 
