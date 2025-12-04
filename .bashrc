@@ -88,3 +88,7 @@ export LC_ALL=zh_CN.UTF-8
 mini-ask() {
     source ~/venv/bin/activate && python3 ~/Projects/DAYS/20251121/gemini_python_small_script/gemini_python_small_script.py "$@"
 }
+
+vibe-update() {
+    cd ~/Projects/DAYS/20251121/update_vibe_coding && sh ./update_vibe_coding.sh
+}
