@@ -92,3 +92,10 @@ mini-ask() {
 vibe-update() {
     cd ~/Projects/DAYS/20251121/update_vibe_coding && sh ./update_vibe_coding.sh
 }
+
+# -------------------------------
+# Auto hosts based on WiFi SSID
+# -------------------------------
+if [ -x "$HOME/Desktop/DAYS/auto-hosts-ssid/auto-hosts-ssid.sh" ]; then
+    "$HOME/Desktop/DAYS/auto-hosts-ssid/auto-hosts-ssid.sh"
+fi
