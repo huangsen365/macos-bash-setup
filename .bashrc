@@ -96,6 +96,6 @@ vibe-update() {
 # -------------------------------
 # Auto hosts based on WiFi SSID
 # -------------------------------
-if [ -x "$HOME/Desktop/DAYS/auto-hosts-ssid/auto-hosts-ssid.sh" ]; then
-    "$HOME/Desktop/DAYS/auto-hosts-ssid/auto-hosts-ssid.sh"
-fi
+#if [ -x "$HOME/Desktop/DAYS/auto-hosts-ssid/auto-hosts-ssid.sh" ]; then
+#    "$HOME/Desktop/DAYS/auto-hosts-ssid/auto-hosts-ssid.sh"
+#fi
